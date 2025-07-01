@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from .models import ProductModel
 
 
@@ -8,10 +10,12 @@ class InMemoryStorage:
         self._items: dict[int, ProductModel] = {}
         self._next_id: int = 1
 
-    def create_product(self, product: ProductModel) -> ProductModel:
-        """商品を新規作成する（ダミー）"""
-        # Task 4で実装
-        raise NotImplementedError
+    def create_product(self, name: str, price: float) -> ProductModel:
+        """商品を新規作成する"""
+        product = ProductModel(id=self._next_id, name=name, price=price, created_at=datetime.now())
+        self._items[product.id] = product
+        self._next_id += 1
+        return product
 
     def get_product(self, product_id: int) -> ProductModel | None:
         """商品IDで商品を取得する（ダミー）"""

@@ -10,3 +10,10 @@ class ProductModel(BaseModel):
     name: str = Field(..., min_length=1, description="商品名")
     price: float = Field(..., gt=0, description="単価")
     created_at: datetime = Field(default_factory=datetime.now, description="作成日時")
+
+
+class CreateProductRequest(BaseModel):
+    """商品作成リクエストモデル"""
+
+    name: str = Field(..., min_length=1, description="商品名")
+    price: float = Field(..., gt=0, description="単価")
