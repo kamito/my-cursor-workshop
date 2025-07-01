@@ -18,6 +18,5 @@ class InMemoryStorage:
         return product
 
     def get_product(self, product_id: int) -> ProductModel | None:
-        """商品IDで商品を取得する（ダミー）"""
-        # Task 5で実装
-        raise NotImplementedError
+        """商品IDで商品を取得する"""
+        return self._items.get(product_id)
