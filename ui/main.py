@@ -44,7 +44,25 @@ with tab1:
                 st.error("APIサーバーに接続できません。サーバーを起動してください。")
 
 
-# --- 商品検索タブ（プレースホルダー） ---
+# --- 商品検索タブ ---
 with tab2:
     st.header("商品を検索する")
-    st.info("この機能はTask 7で実装します。")
+
+    product_id_input = st.number_input("商品ID", min_value=1, step=1, key="search_product_id")
+    if st.button("商品を検索する") and product_id_input:
+        try:
+            response = httpx.get(f"{API_BASE_URL}/items/{product_id_input}", timeout=5)
+            response.raise_for_status()
+
+            product = response.json()
+            st.success(f"商品ID `{product['id']}` の情報が見つかりました。")
+            st.json(product)
+
+        except httpx.HTTPStatusError as e:
+            if e.response.status_code == 404:
+                st.warning(f"⚠️ 商品ID `{product_id_input}` は見つかりませんでした。")
+            else:
+                data = e.response.json()
+                st.error(f"検索に失敗しました: {data.get('detail', '不明なエラー')}")
+        except httpx.RequestError:
+            st.error("APIサーバーに接続できません。サーバーを起動してください。")
