@@ -1,6 +1,20 @@
 import pytest
+from httpx import ASGITransport, AsyncClient
+
+from api.main import app
 
 
-def test_initial_setup_is_ok() -> None:
-    """テスト環境が正しくセットアップされていることを確認するための基本的なテスト。"""
-    assert True
+@pytest.mark.anyio
+async def test_health_check_returns_200() -> None:
+    """/healthエンドポイントはステータスコード200を返す"""
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
+        response = await client.get("/health")
+    assert response.status_code == 200
+
+
+@pytest.mark.anyio
+async def test_health_check_returns_ok_status() -> None:
+    """/healthエンドポイントは{"status": "ok"}を返す"""
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
+        response = await client.get("/health")
+    assert response.json() == {"status": "ok"}
