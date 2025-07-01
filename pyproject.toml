@@ -122,5 +122,7 @@ typeCheckingMode = "basic"
 [dependency-groups]
 dev = [
     "fastapi>=0.115.13",
+    "httpx>=0.28.1",
+    "streamlit>=1.46.1",
 ]
 

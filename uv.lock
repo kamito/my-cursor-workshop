@@ -260,6 +260,8 @@ ui = [
 [package.dev-dependencies]
 dev = [
     { name = "fastapi" },
+    { name = "httpx" },
+    { name = "streamlit" },
 ]
 
 [package.metadata]
@@ -285,7 +287,11 @@ requires-dist = [
 provides-extras = ["api", "ui", "dev", "all"]
 
 [package.metadata.requires-dev]
-dev = [{ name = "fastapi", specifier = ">=0.115.13" }]
+dev = [
+    { name = "fastapi", specifier = ">=0.115.13" },
+    { name = "httpx", specifier = ">=0.28.1" },
+    { name = "streamlit", specifier = ">=1.46.1" },
+]
 
 [[package]]
 name = "distlib"
